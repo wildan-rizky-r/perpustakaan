@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 04, 2021 at 12:41 PM
--- Server version: 10.4.21-MariaDB
--- PHP Version: 8.0.10
+-- Waktu pembuatan: 16 Des 2021 pada 23.17
+-- Versi server: 10.4.21-MariaDB
+-- Versi PHP: 8.0.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `buku`
+-- Struktur dari tabel `buku`
 --
 
 CREATE TABLE `buku` (
@@ -34,7 +34,7 @@ CREATE TABLE `buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `buku`
+-- Dumping data untuk tabel `buku`
 --
 
 INSERT INTO `buku` (`id_buku`, `nama_buku`, `deskripsi`) VALUES
@@ -45,7 +45,7 @@ INSERT INTO `buku` (`id_buku`, `nama_buku`, `deskripsi`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `detail_peminjaman_buku`
+-- Struktur dari tabel `detail_peminjaman_buku`
 --
 
 CREATE TABLE `detail_peminjaman_buku` (
@@ -55,10 +55,21 @@ CREATE TABLE `detail_peminjaman_buku` (
   `qty` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `detail_peminjaman_buku`
+--
+
+INSERT INTO `detail_peminjaman_buku` (`id_detail_peminjaman_buku`, `id_peminjaman_buku`, `id_buku`, `qty`) VALUES
+(1, 2, 1, 1),
+(2, 3, 2, 1),
+(3, 4, 3, 10),
+(4, 5, 1, 1),
+(5, 5, 2, 1);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `jurusan`
+-- Struktur dari tabel `jurusan`
 --
 
 CREATE TABLE `jurusan` (
@@ -68,7 +79,7 @@ CREATE TABLE `jurusan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `jurusan`
+-- Dumping data untuk tabel `jurusan`
 --
 
 INSERT INTO `jurusan` (`id_jurusan`, `nama_jurusan`, `angkatan`) VALUES
@@ -81,7 +92,7 @@ INSERT INTO `jurusan` (`id_jurusan`, `nama_jurusan`, `angkatan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `mahasiswa`
+-- Struktur dari tabel `mahasiswa`
 --
 
 CREATE TABLE `mahasiswa` (
@@ -96,7 +107,7 @@ CREATE TABLE `mahasiswa` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `mahasiswa`
+-- Dumping data untuk tabel `mahasiswa`
 --
 
 INSERT INTO `mahasiswa` (`id_mhs`, `nama`, `tanggal_lahir`, `jenis_kelamin`, `alamat`, `username`, `password`, `id_jurusan`) VALUES
@@ -114,7 +125,7 @@ INSERT INTO `mahasiswa` (`id_mhs`, `nama`, `tanggal_lahir`, `jenis_kelamin`, `al
 -- --------------------------------------------------------
 
 --
--- Table structure for table `peminjaman_buku`
+-- Struktur dari tabel `peminjaman_buku`
 --
 
 CREATE TABLE `peminjaman_buku` (
@@ -124,10 +135,20 @@ CREATE TABLE `peminjaman_buku` (
   `tanggal_kembali` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `peminjaman_buku`
+--
+
+INSERT INTO `peminjaman_buku` (`id_peminjaman_buku`, `tanggal_pinjam`, `id_mhs`, `tanggal_kembali`) VALUES
+(2, '2021-12-13', 10, '2021-12-18'),
+(3, '2021-12-13', 10, '2021-12-18'),
+(4, '2021-12-13', 10, '2021-12-18'),
+(5, '2021-12-13', 2, '2021-12-18');
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengembalian_buku`
+-- Struktur dari tabel `pengembalian_buku`
 --
 
 CREATE TABLE `pengembalian_buku` (
@@ -138,17 +159,25 @@ CREATE TABLE `pengembalian_buku` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
+-- Dumping data untuk tabel `pengembalian_buku`
+--
+
+INSERT INTO `pengembalian_buku` (`id_pengembalian_buku`, `id_peminjaman_buku`, `tanggal_pengembalian`, `denda`) VALUES
+(2, 3, '2021-12-13', 0),
+(3, 5, '2021-12-13', 0);
+
+--
 -- Indexes for dumped tables
 --
 
 --
--- Indexes for table `buku`
+-- Indeks untuk tabel `buku`
 --
 ALTER TABLE `buku`
   ADD PRIMARY KEY (`id_buku`);
 
 --
--- Indexes for table `detail_peminjaman_buku`
+-- Indeks untuk tabel `detail_peminjaman_buku`
 --
 ALTER TABLE `detail_peminjaman_buku`
   ADD PRIMARY KEY (`id_detail_peminjaman_buku`),
@@ -156,97 +185,97 @@ ALTER TABLE `detail_peminjaman_buku`
   ADD KEY `id_peminjaman_buku` (`id_peminjaman_buku`);
 
 --
--- Indexes for table `jurusan`
+-- Indeks untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   ADD PRIMARY KEY (`id_jurusan`);
 
 --
--- Indexes for table `mahasiswa`
+-- Indeks untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD PRIMARY KEY (`id_mhs`),
   ADD KEY `id_jurusan` (`id_jurusan`);
 
 --
--- Indexes for table `peminjaman_buku`
+-- Indeks untuk tabel `peminjaman_buku`
 --
 ALTER TABLE `peminjaman_buku`
   ADD PRIMARY KEY (`id_peminjaman_buku`),
   ADD KEY `id_mhs` (`id_mhs`);
 
 --
--- Indexes for table `pengembalian_buku`
+-- Indeks untuk tabel `pengembalian_buku`
 --
 ALTER TABLE `pengembalian_buku`
   ADD PRIMARY KEY (`id_pengembalian_buku`),
   ADD KEY `id_peminjaman_buku` (`id_peminjaman_buku`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `buku`
+-- AUTO_INCREMENT untuk tabel `buku`
 --
 ALTER TABLE `buku`
   MODIFY `id_buku` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `detail_peminjaman_buku`
+-- AUTO_INCREMENT untuk tabel `detail_peminjaman_buku`
 --
 ALTER TABLE `detail_peminjaman_buku`
-  MODIFY `id_detail_peminjaman_buku` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_peminjaman_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `jurusan`
+-- AUTO_INCREMENT untuk tabel `jurusan`
 --
 ALTER TABLE `jurusan`
   MODIFY `id_jurusan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
--- AUTO_INCREMENT for table `mahasiswa`
+-- AUTO_INCREMENT untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   MODIFY `id_mhs` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- AUTO_INCREMENT for table `peminjaman_buku`
+-- AUTO_INCREMENT untuk tabel `peminjaman_buku`
 --
 ALTER TABLE `peminjaman_buku`
-  MODIFY `id_peminjaman_buku` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_peminjaman_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
--- AUTO_INCREMENT for table `pengembalian_buku`
+-- AUTO_INCREMENT untuk tabel `pengembalian_buku`
 --
 ALTER TABLE `pengembalian_buku`
-  MODIFY `id_pengembalian_buku` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_pengembalian_buku` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- Constraints for dumped tables
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
 
 --
--- Constraints for table `detail_peminjaman_buku`
+-- Ketidakleluasaan untuk tabel `detail_peminjaman_buku`
 --
 ALTER TABLE `detail_peminjaman_buku`
   ADD CONSTRAINT `detail_peminjaman_buku_ibfk_1` FOREIGN KEY (`id_buku`) REFERENCES `buku` (`id_buku`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `detail_peminjaman_buku_ibfk_2` FOREIGN KEY (`id_peminjaman_buku`) REFERENCES `peminjaman_buku` (`id_peminjaman_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `mahasiswa`
+-- Ketidakleluasaan untuk tabel `mahasiswa`
 --
 ALTER TABLE `mahasiswa`
   ADD CONSTRAINT `mahasiswa_ibfk_1` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusan` (`id_jurusan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `peminjaman_buku`
+-- Ketidakleluasaan untuk tabel `peminjaman_buku`
 --
 ALTER TABLE `peminjaman_buku`
   ADD CONSTRAINT `peminjaman_buku_ibfk_1` FOREIGN KEY (`id_mhs`) REFERENCES `mahasiswa` (`id_mhs`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
--- Constraints for table `pengembalian_buku`
+-- Ketidakleluasaan untuk tabel `pengembalian_buku`
 --
 ALTER TABLE `pengembalian_buku`
   ADD CONSTRAINT `pengembalian_buku_ibfk_1` FOREIGN KEY (`id_peminjaman_buku`) REFERENCES `peminjaman_buku` (`id_peminjaman_buku`) ON DELETE CASCADE ON UPDATE CASCADE;
